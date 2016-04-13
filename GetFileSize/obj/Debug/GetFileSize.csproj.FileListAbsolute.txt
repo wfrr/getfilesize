@@ -1,0 +1,12 @@
+C:\Users\Никита\Documents\joint_projects\getfilesize\GetFileSize\GetFileSize\bin\Debug\GetFileSize.exe.config
+C:\Users\Никита\Documents\joint_projects\getfilesize\GetFileSize\GetFileSize\bin\Debug\GetFileSize.exe
+C:\Users\Никита\Documents\joint_projects\getfilesize\GetFileSize\GetFileSize\bin\Debug\GetFileSize.pdb
+C:\Users\Никита\Documents\joint_projects\getfilesize\GetFileSize\GetFileSize\obj\Debug\GetFileSize.csprojResolveAssemblyReference.cache
+C:\Users\Никита\Documents\joint_projects\getfilesize\GetFileSize\GetFileSize\obj\Debug\GetFileSize.exe
+C:\Users\Никита\Documents\joint_projects\getfilesize\GetFileSize\GetFileSize\obj\Debug\GetFileSize.pdb
+C:\Users\Никита\Desktop\joint_projects\getfilesize\GetFileSize\bin\Debug\GetFileSize.exe.config
+C:\Users\Никита\Desktop\joint_projects\getfilesize\GetFileSize\obj\Debug\GetFileSize.exe
+C:\Users\Никита\Desktop\joint_projects\getfilesize\GetFileSize\obj\Debug\GetFileSize.pdb
+C:\Users\Никита\Desktop\joint_projects\getfilesize\GetFileSize\bin\Debug\GetFileSize.exe
+C:\Users\Никита\Desktop\joint_projects\getfilesize\GetFileSize\bin\Debug\GetFileSize.pdb
+C:\Users\Никита\Desktop\joint_projects\getfilesize\GetFileSize\obj\Debug\GetFileSize.csprojResolveAssemblyReference.cache

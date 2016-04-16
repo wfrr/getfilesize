@@ -64,6 +64,12 @@ namespace GetFileSize
             }
         }
 
+        private string getFileSize()
+        {
+            string size = "";
+            return size;
+        }
+
         void showDir()
         {
             Console.Out.WriteLine("Going to scan " + homeDir + "\n");

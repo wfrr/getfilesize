@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections;
 
 namespace GetFileSize
 {
@@ -13,8 +14,6 @@ namespace GetFileSize
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("I'm a program!");
-            
             //Draw form
 
             MainForm ourform = new MainForm();
@@ -22,10 +21,21 @@ namespace GetFileSize
 
             //end draw
 
-            string input = getInput();
-            Scanner s = new Scanner(input);
-            //Display d = new Display();
-            Console.ReadLine();
+            /*
+             * 
+             * "getBiggestFiles()" should be called to get dictionary with 5 records
+             * that is convenient to present in the gui
+             * 
+             * 
+             * Scanner s = new Scanner();
+             * object biggestFiles = s.getBiggestFiles(); 
+             * 
+             * 
+             * Also "new Scanner(textBoxInput.Text)" to process input
+             * 
+             * 
+             */
+
         }
         // HERE
         public class MainForm : Form
@@ -103,70 +113,76 @@ namespace GetFileSize
         }
 
         // END
-
-            private static string getInput()
-        {
-            
-            Console.WriteLine("Enter your username: ");
-            string line = Console.ReadLine();            
-            return line;
-        }
     }
 
-    class Scanner
+    public class Scanner
     { 
-        public string homeDir = "C:\\Users\\";
+        private string dir = "C:\\Users\\";
+        private int numOfFiles = 5;
+        private SortedDictionary<int, string> fileData = new SortedDictionary<int, string>();
+        
+        //StreamWriter outputFile = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\1.txt", true);
+
 
         public Scanner(string username)
         {
-            homeDir =String.Concat(homeDir, username, "\\");
-            Console.WriteLine(homeDir);
-            //showDir();
-            scan();
-        }
-
-        private void scan()
-        {
-            if (Directory.Exists(homeDir))
+            dir =String.Concat(dir, username, "\\");
+            if (checkInput())
             {
-                Console.Out.WriteLine("Scanning...");
-                Console.WriteLine("subdirs:");
-                string[] dirs = Directory.GetDirectories(homeDir);
-                foreach (string s in dirs)
-                {
-                    Console.WriteLine(s);
-                }
-                Console.WriteLine();
-                Console.WriteLine("files:");
-                string[] files = Directory.GetFiles(homeDir);
-                foreach (string s in files)
-                {
-                    Console.WriteLine(s);
-                }
+                scan(dir);
             }
             else
             {
-                Console.Out.WriteLine("Home directory does not exists!");
+                MessageBox.Show("Input error, try again");
             }
         }
 
-        private string getFileSize()
+        private bool checkInput() 
         {
-            string size = "";
-            return size;
+            if (!Directory.Exists(dir))
+            {
+                return false;
+            }
+            else 
+            {
+                return true;
+            }
         }
 
-        void showDir()
+        private void scan(string dir)
         {
-            Console.Out.WriteLine("Going to scan " + homeDir + "\n");
+            try
+            {
+                foreach (string d in Directory.GetDirectories(dir))
+                {
+                    foreach (string f in Directory.GetFiles(d))
+                    {
+                        fileData.Add(unchecked((int)new System.IO.FileInfo(f).Length), f);
+                    }
+                    scan(d);
+                }
+            }
+            catch (System.Exception excpt)
+            {
+                //Console.WriteLine(excpt.Message);
+            }
         }
-    }
 
-    class Display
-    {
-        public Display()
+        internal object getBiggestFiles()
         {
-            Console.Out.WriteLine("I will display smth soon!");
+            Dictionary<int, string> biggestFiles = new Dictionary<int, string>();
+            foreach (var x in fileData.Reverse())
+            {
+                //outputFile.WriteLine(x.Value + "\t" + x.Key);
+                if (numOfFiles > 0)
+                {
+                    biggestFiles.Add(x.Key, x.Value);
+                    numOfFiles--;
+                }                  
+                else
+                    return biggestFiles;
+            }
+            return null; // in case of error
         }
     }
 }

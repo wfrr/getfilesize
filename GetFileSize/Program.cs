@@ -125,31 +125,21 @@ namespace GetFileSize
 
             private void buttonSendClick(object source, EventArgs e)
             {
+                listViewOutput.Items.Clear();
                 Scanner s = new Scanner(this.GetString());
-               
 
-                //object biggestFiles = s.getBiggestFiles();
-                /*Dictionary<int, string>.KeyCollection keyColl = s.getBiggestFiles().Keys;
-                foreach (int i in keyColl)
+                Dictionary<int, string> dic = s.getBiggestFiles();
+                if (dic != null)
                 {
-                    MessageBox.Show(i.ToString());
-                }*/
-                int i = 0;
-                foreach (KeyValuePair<int, string> kvp in s.getBiggestFiles())
-                {
-                    listViewOutput.Items.Add(kvp.Value.ToString());
-                    listViewOutput.Items[i].SubItems.Add(kvp.Key.ToString());
-                    i++;
-                    //MessageBox.Show(kvp.Key.ToString());
-                    //MessageBox.Show(kvp.Value.ToString());
-                    //listViewOutput.Items[0].Text = "bla";
-                    //listViewOutput.Items[0].SubItems.Add("hm"); //добавить в первую колонку
-                    //listView.Items[index].SubItems.Add(testTextValue2);
+                    int i = 0;
+                    foreach (KeyValuePair<int, string> kvp in dic)
+                    {
+                        listViewOutput.Items.Add(kvp.Value.ToString());
+                        listViewOutput.Items[i].SubItems.Add(kvp.Key.ToString());
+                        i++;
+
+                    }
                 }
-                //MessageBox.Show(s.getBiggestFiles().Values.ToArray().ToString());
-
-                //labelOutput.Text = s.getBiggestFiles().GetType().ToString();
-                //labelOutput.Text = s.getBiggestFiles().ToString();
             }
             
             public string GetString()

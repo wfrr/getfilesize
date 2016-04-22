@@ -121,11 +121,11 @@ namespace GetFileSize
                 listViewOutput.Items.Clear();
                 Scanner s = new Scanner(this.GetString());
 
-                Dictionary<int, string> dic = s.getBiggestFiles();
+                Dictionary<string, string> dic = s.getBiggestFiles();
                 if (dic != null)
                 {
                     int i = 0;
-                    foreach (KeyValuePair<int, string> kvp in dic)
+                    foreach (KeyValuePair<string, string> kvp in dic)
                     {
                         listViewOutput.Items.Add(kvp.Value.ToString());
                         listViewOutput.Items[i].SubItems.Add(kvp.Key.ToString());

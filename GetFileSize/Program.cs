@@ -20,23 +20,16 @@ namespace GetFileSize
             Application.Run(ourform);
             //end draw
 
-  
-
             /*
              * 
-             * "getBiggestFiles()" should be called to get dictionary with 5 records
-             * that is convenient to present in the gui
-             * 
-             * 
              * Scanner s = new Scanner();
-             * object biggestFiles = s.getBiggestFiles(); 
-             * 
-             * 
-             * Also "new Scanner(textBoxInput.Text)" to process input
-             * 
+             * Dictionary<string, string> biggestFiles = s.getBiggestFiles();
+             * foreach (var x in biggestFiles)
+             * {
+             *  Console.WriteLine(x.Value + "\t" + x.Key);
+             * }
              * 
              */
-
         }
         // HERE
         public class MainForm : Form
@@ -155,8 +148,8 @@ namespace GetFileSize
     { 
         private string dir = "C:\\Users\\";
         private int numOfFiles = 5;
-        private SortedDictionary<int, string> fileData = new SortedDictionary<int, string>();
-        
+        private SortedDictionary<long, string> fileData = new SortedDictionary<long, string>();
+
         //StreamWriter outputFile = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\1.txt", true);
 
 
@@ -193,7 +186,7 @@ namespace GetFileSize
                 {
                     foreach (string f in Directory.GetFiles(d))
                     {
-                        fileData.Add(unchecked((int)new System.IO.FileInfo(f).Length), f);
+                        fileData.Add(new System.IO.FileInfo(f).Length, Path.GetFileName(f));
                     }
                     scan(d);
                 }
@@ -204,16 +197,15 @@ namespace GetFileSize
             }            
         }
 
-        //internal object getBiggestFiles()
-        public Dictionary<int, string> getBiggestFiles()
+        public Dictionary<string, string> getBiggestFiles()
         {
-            Dictionary<int, string> biggestFiles = new Dictionary<int, string>();
+            Dictionary<string, string> biggestFiles = new Dictionary<string, string>();
             foreach (var x in fileData.Reverse())
             {
                 //outputFile.WriteLine(x.Value + "\t" + x.Key);
                 if (numOfFiles > 0)
                 {
-                    biggestFiles.Add(x.Key, x.Value);
+                    biggestFiles.Add(x.Key.ToString(), x.Value);
                     numOfFiles--;
                 }                  
                 else

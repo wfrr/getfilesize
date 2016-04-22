@@ -18,8 +18,9 @@ namespace GetFileSize
 
             MainForm ourform = new MainForm();
             Application.Run(ourform);
-
             //end draw
+
+  
 
             /*
              * 
@@ -42,18 +43,22 @@ namespace GetFileSize
         {
             public MainForm()
             {
-                DisplayGUI();
+                DisplayGUI();                
             }
 
             private Button buttonSend;
             private Label labelInput;
             private TextBox textBoxInput;
+           
+            private ListView listViewOutput;
+            private ListViewItem itemFaleName;
+            private ListViewItem itemFaleSize;
 
             private void DisplayGUI()
             {
                 //this.Name = "WinForm Example";
                 this.Text = "GetFileSize";
-                this.Size = new Size(300, 400);
+                this.Size = new Size(500, 600);
                 this.StartPosition = FormStartPosition.CenterScreen;
                 this.BackColor = Color.PaleTurquoise;
                 
@@ -85,21 +90,34 @@ namespace GetFileSize
                 buttonSend.Font = new Font("Tobota", 10, FontStyle.Bold);
 
                 buttonSend.Click += new System.EventHandler(this.buttonSendClick);
-                /*MessageBox.Show(this.Bottom.ToString());
-                MessageBox.Show(buttonSend.Bottom.ToString());
 
-                MessageBox.Show(buttonSend.Height.ToString());
-                MessageBox.Show(this.Top.ToString());
-                MessageBox.Show(this.Bottom.ToString());
-                int x = this.Bottom - buttonSend.Height;
-                MessageBox.Show(x.ToString());
-                MessageBox.Show(buttonSend.Top.ToString());
-                MessageBox.Show(buttonSend.Bottom.ToString());*/
+
+                //listViewOutput
+                listViewOutput = new ListView();
+                itemFaleName = new ListViewItem();
+                itemFaleSize = new ListViewItem();
+
+                listViewOutput.View = View.Details;
+                listViewOutput.Columns.Add("File", 250, HorizontalAlignment.Left);
+                listViewOutput.Columns.Add("Size", 150, HorizontalAlignment.Left);
+
+                itemFaleName.Text = "File";
+                itemFaleSize.Text = "Size";
+                
+                listViewOutput.Size = new Size(400, 200);
+                listViewOutput.Location = new Point((this.Width / 2) - (listViewOutput.Width / 2), textBoxInput.Bottom + 20);
+                listViewOutput.Font = new Font("Tobota", 10, FontStyle.Bold);
+                listViewOutput.AutoResizeColumns(ColumnHeaderAutoResizeStyle.None);
+                
 
                 this.Controls.Add(labelInput);
                 this.Controls.Add(textBoxInput);
                 this.Controls.Add(buttonSend);
+
+                this.Controls.Add(listViewOutput);
+
                 this.Show();
+
                 
 
                 return;
@@ -107,8 +125,36 @@ namespace GetFileSize
 
             private void buttonSendClick(object source, EventArgs e)
             {
-                MessageBox.Show("What are you doing??? Stop it!");
-                MessageBox.Show(textBoxInput.Text);
+                Scanner s = new Scanner(this.GetString());
+               
+
+                //object biggestFiles = s.getBiggestFiles();
+                /*Dictionary<int, string>.KeyCollection keyColl = s.getBiggestFiles().Keys;
+                foreach (int i in keyColl)
+                {
+                    MessageBox.Show(i.ToString());
+                }*/
+                int i = 0;
+                foreach (KeyValuePair<int, string> kvp in s.getBiggestFiles())
+                {
+                    listViewOutput.Items.Add(kvp.Value.ToString());
+                    listViewOutput.Items[i].SubItems.Add(kvp.Key.ToString());
+                    i++;
+                    //MessageBox.Show(kvp.Key.ToString());
+                    //MessageBox.Show(kvp.Value.ToString());
+                    //listViewOutput.Items[0].Text = "bla";
+                    //listViewOutput.Items[0].SubItems.Add("hm"); //добавить в первую колонку
+                    //listView.Items[index].SubItems.Add(testTextValue2);
+                }
+                //MessageBox.Show(s.getBiggestFiles().Values.ToArray().ToString());
+
+                //labelOutput.Text = s.getBiggestFiles().GetType().ToString();
+                //labelOutput.Text = s.getBiggestFiles().ToString();
+            }
+            
+            public string GetString()
+            {
+                return textBoxInput.Text;
             }
         }
 
@@ -165,10 +211,11 @@ namespace GetFileSize
             catch (System.Exception excpt)
             {
                 //Console.WriteLine(excpt.Message);
-            }
+            }            
         }
 
-        internal object getBiggestFiles()
+        //internal object getBiggestFiles()
+        public Dictionary<int, string> getBiggestFiles()
         {
             Dictionary<int, string> biggestFiles = new Dictionary<int, string>();
             foreach (var x in fileData.Reverse())
